@@ -4,11 +4,12 @@ import Icon from "@/components/ui/icon";
 
 interface Props {
   categories: Category[];
+  memberId?: string;
   onAdd: (t: Transaction) => void;
   onClose: () => void;
 }
 
-export default function AddTransactionModal({ categories, onAdd, onClose }: Props) {
+export default function AddTransactionModal({ categories, memberId = "", onAdd, onClose }: Props) {
   const [type, setType] = useState<"income" | "expense">("expense");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
@@ -21,6 +22,7 @@ export default function AddTransactionModal({ categories, onAdd, onClose }: Prop
     if (!amount || !categoryId || !description) return;
     onAdd({
       id: Date.now().toString(),
+      memberId,
       amount: parseFloat(amount),
       type,
       categoryId,
